@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/phuc")
 public class RegisterController {
     @Autowired
     private UserService userService;
