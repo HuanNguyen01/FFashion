@@ -33,8 +33,18 @@ public class UserService {
 	@Autowired
 	private UserRoleRepository userRoleRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder = new PasswordEncoder() {
+		@Override
+		public String encode(CharSequence rawPassword) {
+			return null;
+		}
+
+		@Override
+		public boolean matches(CharSequence rawPassword, String encodedPassword) {
+			return false;
+		}
+	};
+
   
   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
