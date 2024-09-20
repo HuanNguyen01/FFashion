@@ -1,21 +1,18 @@
-/**
- * Author: Ngô Văn Quốc Thắng 11/05/1996
- * Author: Nguyễn Viết Hoàng Phúc 22/11/1997
- */
+	/**
+	 * Author: Ngô Văn Quốc Thắng 11/05/1996
+	 */
 package fashion.mock.service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import fashion.mock.model.Role;
 import fashion.mock.model.User;
 import fashion.mock.model.UserRole;
@@ -25,62 +22,17 @@ import fashion.mock.repository.UserRoleRepository;
 
 @Service
 public class UserService {
-	private final UserRepository userRepository;
-	private final RoleRepository roleRepository;
-	private final UserRoleRepository userRoleRepository;
-	private final PasswordEncoder passwordEncoder;
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	private UserRepository userRepository;
 
-	public UserService(UserRepository userRepository, RoleRepository roleRepository,
-			UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
-		this.userRoleRepository = userRoleRepository;
-		this.passwordEncoder = passwordEncoder;
-		this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
-	}
+	@Autowired
+	private RoleRepository roleRepository;
 
-	/**
-	 * Author: Nguyễn Viết Hoàng Phúc 22/11/1997
-	 */
-	public User createUser(User user) {
-		String encoderPassword = bCryptPasswordEncoder.encode(user.getPassword());
-		user.setStatus("unActive");
-		user.setCreatedDate(LocalDate.now());
-		user.setPassword(encoderPassword);
-		return userRepository.save(user);
-	}
-	
-	/**
-	 * Author: Nguyễn Viết Hoàng Phúc 22/11/1997
-	 */
-	public User getByEmail(String email) {
-		return userRepository.getUserByEmail(email);
-	}
-	
-	/**
-	 * Author: Nguyễn Viết Hoàng Phúc 22/11/1997
-	 */
-	public User activeUser(User user) {
-		user.setStatus("Active");
-		return userRepository.save(user);
-	}
+	@Autowired
+	private UserRoleRepository userRoleRepository;
 
-	/**
-	 * Author: Nguyễn Viết Hoàng Phúc 22/11/1997
-	 */
-	public User updatePassword(User user, String password) {
-		user.setUpdatedDate(LocalDate.now());
-		user.setPassword(bCryptPasswordEncoder.encode(password)); // Mã hóa mật khẩu trước khi lưu
-		return userRepository.save(user); // Lưu lại thông tin người dùng sau khi cập nhật mật khẩu
-	}
-	
-	/**
-	 * Author: Nguyễn Viết Hoàng Phúc 22/11/1997
-	 */
-	public Boolean checkEmail(String email) {
-		return userRepository.existsByEmail(email);
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * Author: Ngô Văn Quốc Thắng 11/05/1996
@@ -141,10 +93,17 @@ public class UserService {
 			throw new IllegalArgumentException("Email không được để trống");
 		}
 
+		// String trimmedUsername = user.getUserName().trim();
 		String trimmedEmail = user.getEmail().trim();
+
+//        if (userRepository.findByUserName(trimmedUsername) != null) {
+//            throw new IllegalArgumentException("Tên người dùng đã tồn tại");
+//        }
 		if (userRepository.findByEmail(trimmedEmail) != null) {
 			throw new IllegalArgumentException("Email đã tồn tại");
 		}
+
+		// user.setUserName(trimmedUsername);
 		user.setEmail(trimmedEmail);
 	}
 
@@ -159,7 +118,14 @@ public class UserService {
 			throw new IllegalArgumentException("Email không được để trống");
 		}
 
+		// String trimmedUsername = user.getUserName().trim();
 		String trimmedEmail = user.getEmail().trim();
+
+//        User userWithSameUsername = userRepository.findByUserName(trimmedUsername);
+//        if (userWithSameUsername != null && !userWithSameUsername.getId().equals(existingUser.getId())) {
+//            throw new IllegalArgumentException("Tên người dùng đã tồn tại");
+//        }
+
 		User userWithSameEmail = userRepository.findByEmail(trimmedEmail);
 		if (userWithSameEmail != null && !userWithSameEmail.getId().equals(existingUser.getId())) {
 			throw new IllegalArgumentException("Email đã tồn tại");
