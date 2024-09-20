@@ -24,7 +24,7 @@ public class SecurityConfig {
 				.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**", "/webjars/**",
 						"/fontawesome-free-5.15.4-web/**")
 				.permitAll().requestMatchers("/", "/trangchu", "/login", "/register").permitAll()
-				.requestMatchers("/users/**", "/products/**", "/categories/**").permitAll() // Cho phép truy cập không
+				.requestMatchers("/users/**", "/products/**", "/categories/**", "/discounts/**").permitAll() // Cho phép truy cập không
 																							// cần đăng
 																							// nhập/reset-password
 				.anyRequest().authenticated() // Các request khác cần đăng nhập

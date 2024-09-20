@@ -42,6 +42,13 @@
             <div class="nav-item"><a href="/users/new">Thêm người dùng</a></div>
             <div class="nav-item"><a href="/users">Hiển thị người dùng</a></div>
           </div>
+           <div class="nav-item has-submenu">
+                    <a href="#"><i class="fas fa-percent"></i> Giảm giá</a>
+                </div>
+                <div class="submenu">
+                    <div class="nav-item"><a href="/discounts/new">Thêm giảm giá</a></div>
+                    <div class="nav-item"><a href="/discounts">Hiển thị giảm giá</a></div>
+                </div>
         </div>
         <div class="col-md-10">
           <div class="header">
@@ -88,36 +95,12 @@
    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script> -->
     
     <script>
-/*       $(document).ready(function () {
-        $(".has-submenu").click(function () {
-          $(this).next(".submenu").slideToggle();
-        });
-      }); */
-      
       $(document).ready(function () {
     	    // Hiển thị submenu khi click
     	    $(".has-submenu").click(function () {
     	      $(this).next(".submenu").slideToggle();
     	    });
 
-    	    // Thiết lập validate cho form
-    	    $("form").validate({
-    	      rules: {
-    	        categoryName: {
-    	          required: true,   // Bắt buộc phải nhập
-    	          maxlength: 25     // Không được vượt quá 25 ký tự
-    	        }
-    	      },
-    	      messages: {
-    	        categoryName: {
-    	          required: "Tên danh mục không được để trống111",
-    	          maxlength: "Tên danh mục không được vượt quá 25 ký tự"
-    	        }
-    	      },
-    	      submitHandler: function (form) {
-    	        form.submit();  // Nếu hợp lệ, submit form
-    	      }
-    	    });
     	  });
     </script>
   </body>

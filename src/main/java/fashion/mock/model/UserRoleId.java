@@ -7,11 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class UserRoleId implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Long user;
+    private Long user;
     private Long role;
 
     public UserRoleId() {}
