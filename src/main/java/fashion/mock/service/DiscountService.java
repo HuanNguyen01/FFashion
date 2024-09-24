@@ -18,7 +18,7 @@ import fashion.mock.repository.ProductRepository;
 public class DiscountService {
 
     @Autowired
-    private DiscountRepository discountRepository;
+    private DiscountRepository discountRepository; 
 
     @Autowired
     private ProductRepository productRepository;

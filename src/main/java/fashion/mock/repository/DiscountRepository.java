@@ -17,7 +17,7 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
     @Query("SELECT d FROM Discount d WHERE LOWER(d.product.productName) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     Page<Discount> searchByProductName(@Param("searchTerm") String searchTerm, Pageable pageable);
 
-    Page<Discount> findAll(Pageable pageable);
+    Page<Discount> findAll(Pageable pageable); 
 
     List<Discount> findByProductId(Long productId);
     
