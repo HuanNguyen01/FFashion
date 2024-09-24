@@ -14,7 +14,7 @@ import fashion.mock.model.Product;
 import fashion.mock.repository.DiscountRepository;
 import fashion.mock.repository.ProductRepository;
 
-@Service
+@Service 
 public class DiscountService {
 
     @Autowired

@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import fashion.mock.model.Discount;
 import fashion.mock.model.Product;
 
-public interface DiscountRepository extends JpaRepository<Discount, Long> {
+public interface DiscountRepository extends JpaRepository<Discount, Long> { 
 
     @Query("SELECT d FROM Discount d WHERE LOWER(d.product.productName) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     Page<Discount> searchByProductName(@Param("searchTerm") String searchTerm, Pageable pageable);
