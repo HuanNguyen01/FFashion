@@ -82,15 +82,16 @@ public CheckoutController(ShoppingCartUtils shoppingCartUtils, CheckoutService c
 
 		// Pass selected items to model
 		model.addAttribute(SELECTED_CART_ITEMS, selectedCartItems);
-		model.addAttribute("payments", payments); // Add the user to the model
+		model.addAttribute("payments", payments); // Add the payments to the model
 		model.addAttribute("totalPrice", totalPrice); // Pass the total price to the view
 
-		// Render checkout page (Thymeleaf template)
 		return "checkout";
 	}
 
 	@PostMapping("/submit")
-	public String submitCheckout(@RequestParam String paymentMethod, @RequestParam String shippingMethod,
+	public String submitCheckout(
+			@RequestParam String paymentMethod, 
+			@RequestParam String shippingMethod,
 			HttpSession session, Model model) {
 
 		User user = (User) session.getAttribute("user");
@@ -113,7 +114,7 @@ public CheckoutController(ShoppingCartUtils shoppingCartUtils, CheckoutService c
 		order.setOrderDate(LocalDate.now());
 		order.setShippingPrice(shippingCost);
 		order.setTotalPrice(totalPriceWithShipping);
-		order.setStatus("Chờ phê duyệt"); // Change status according to payment method
+		order.setStatus("Chờ phê duyệt"); 
 		order.setUpdatedDate(LocalDate.now());
 		Order savedOrder = orderService.saveOrder(order);
 
@@ -155,8 +156,7 @@ public CheckoutController(ShoppingCartUtils shoppingCartUtils, CheckoutService c
 		}
 		checkoutService.saveTransactionHistory(transactionHistory);
 
-		// Pass the order object to the model so it can be used in the Thymeleaf
-		// template
+		// Pass the order object to the model 
 		model.addAttribute("order", savedOrder);
 		model.addAttribute("totalPrice", totalPrice);
 
@@ -164,13 +164,13 @@ public CheckoutController(ShoppingCartUtils shoppingCartUtils, CheckoutService c
 		@SuppressWarnings("unchecked")
 		Map<Long, CartItem> cartItemsMap = (Map<Long, CartItem>) session.getAttribute(CART_ITEMS);
 		for (CartItem item : selectedItems) {
-			cartItemsMap.remove(item.getProductID()); // Remove from cart
+			cartItemsMap.remove(item.getProductID());
 		}
 		session.setAttribute(CART_ITEMS, cartItemsMap);
 
 		// Send confirmation email to the user
-		String userEmail = user.getEmail(); // Get the user's email
-		emailService.sendOrderConfirmation(userEmail, savedOrder); // Call email service
+		String userEmail = user.getEmail();
+		emailService.sendOrderConfirmation(userEmail, savedOrder);
 
 		// Clear the selected items after checkout
 		session.removeAttribute(SELECTED_CART_ITEMS);
